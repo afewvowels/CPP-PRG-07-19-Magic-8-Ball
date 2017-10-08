@@ -25,6 +25,7 @@
 /* Begin PBXFileReference section */
 		2594E8B01F8A8AA7003FCE6F /* PRG-7-19-Magic-8-Ball */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "PRG-7-19-Magic-8-Ball"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2594E8B31F8A8AA7003FCE6F /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		2594E8BA1F8A8AB1003FCE6F /* 8_ball_responses.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = 8_ball_responses.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +59,7 @@
 			isa = PBXGroup;
 			children = (
 				2594E8B31F8A8AA7003FCE6F /* main.cpp */,
+				2594E8BA1F8A8AB1003FCE6F /* 8_ball_responses.txt */,
 			);
 			path = "PRG-7-19-Magic-8-Ball";
 			sourceTree = "<group>";
