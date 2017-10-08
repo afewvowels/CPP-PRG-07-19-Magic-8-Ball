@@ -30,8 +30,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <cstdlib>
-#include <ctime>
+#include <random>
 
 using namespace std;
 
@@ -39,31 +38,49 @@ const int INT_ARRAY_SIZE = 12;
 
 void generateArray(string[]);
 int generateRandomNumber();
-void generateResponse(const string[], int, string &);
+string generateResponse(const string[], const int);
 
 int main()
 {
     string strArrayResponses[INT_ARRAY_SIZE];
+    string strQuestion;
     string strResponse;
     string strExit;
     
     int intResponseNumber;
     
+    // Populate array once before loop starts
     generateArray(strArrayResponses);
     
+    // Use while loop, don't need do/while since strExit will never be 'exit' on launch
     while(strExit != "exit" && strExit != "Exit" && strExit != "EXIT")
     {
+        // Use getline to get full question string
+        cout << "Enter your question:\n";
+        getline(cin, strQuestion);
+        
+        // Output this message to let user know the number is generating
         cout << "Generating response, please wait...\n";
         
-        do
-        {
-            intResponseNumber = generateRandomNumber();
-        } while(intResponseNumber > 12);
-        generateResponse(strArrayResponses, intResponseNumber, strResponse);
+        // Call function to generate random number
+        intResponseNumber = generateRandomNumber();
+        
+        // Use random number generated as array indesx to pull response
+        // from file-generated response array
+        strResponse = generateResponse(strArrayResponses, intResponseNumber);
+        
+        // Repeat question back to the user before answering question
+        cout << "In response to your question:\n\"" << strQuestion << "\"\nThe Magic 8-Ball says:\n";
+        
+        // Respond with randomly selected array value
         cout << strResponse << endl;
-        cout << "Type exit to quit, or press any key\n"
+        
+        // Allow user to loop the function and ask another question
+        cout << "Type exit to quit, or enter any key\n"
         << "another response: ";
-        cin >> strExit;
+        
+        // Use getline otherwise line break will break the loop
+        getline(cin, strExit);
     }
     
     return 0;
@@ -84,11 +101,7 @@ void generateArray(string responseArray[])
     for(int arraySize = 0 ; arraySize < INT_ARRAY_SIZE ; arraySize++)
     {
         getline(responseFile, strTemp);
-        //responseFile >> strTemp;
         responseArray[arraySize] = strTemp;
-        //cout << chrLetter << endl;
-        //cout << strTemp << endl;
-        
         responseFile.clear();
     }
     
@@ -98,35 +111,29 @@ void generateArray(string responseArray[])
 int generateRandomNumber()
 {
     int intResult;
-    int intTempTime;
     
-    float fltClock;
+    // Use random_device to generate seed
+    random_device rd;
     
-    intTempTime = time(0);
+    // Use seed to set Mersenne twister engine
+    mt19937 engine(rd());
     
-    //Test when intTempTime is the same as time(0)
-    //It is sometimes false and falls through
-    //With no returned value
-    while(intTempTime == time(0))
-    {
-        while(intTempTime != time(0))
-        {
-            fltClock = time(0);
-            
-            unsigned seed = time(0);
-            
-            srand(seed);
-            
-            intResult = rand() % 12;
-            
-            return intResult;
-        }
-    }
-    return 0;
+    // Define distribution and type
+    uniform_int_distribution<> distribution(0, 11);
+    
+    // Generate a result in range of distribution with MTE engine
+    intResult = distribution(engine);
+    
+    return intResult;
 }
 
-void generateResponse(const string responseArray[], int intRandom, string &refResponse)
+// Constants here since there won't be any modification of the values, just reading
+string generateResponse(const string responseArray[], const int intRandom)
 {
-    refResponse = responseArray[intRandom];
+    string strResponse;
+    
+    strResponse = responseArray[intRandom];
+    
+    return strResponse;
 }
 
