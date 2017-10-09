@@ -29,6 +29,7 @@
 //  The answer is clearly NO.
 
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <random>
 
